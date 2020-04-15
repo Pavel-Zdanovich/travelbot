@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <preConditions onError="WARN" onFail="WARN" onSqlOutput="IGNORE"/>
+
+    <changeSet author="pavel.zdanovich" id="delete CITY_SEQUENCE" runAlways="true" runOnChange="true"
+               failOnError="false">
+        <dropSequence sequenceName="CITY_SEQUENCE" cacheSize="0" startValue="1"/>
+    </changeSet>
+
+    <changeSet author="pavel.zdanovich" id="delete CITY table" runAlways="true" runOnChange="true" failOnError="false">
+        <dropTable tableName="CITY" cascadeConstraints="true"/>
+    </changeSet>
+
+    <changeSet author="pavel.zdanovich" id="create CITY table" runAlways="true" runOnChange="true" failOnError="true">
+        <createTable tableName="CITY">
+            <column name="ID" type="BIGINT"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="pavel.zdanovich" id="create constraints for CITY" runAlways="true" runOnChange="true"
+               failOnError="true">
+        <addNotNullConstraint constraintName="ID_NOT_NULL" tableName="CITY" columnName="ID"/>
+        <addPrimaryKey constraintName="CITY_PK" tableName="CITY" columnNames="ID"/>
+        <addNotNullConstraint constraintName="CITY_NAME_NOT_NULL" tableName="CITY" columnName="NAME"/>
+        <addUniqueConstraint constraintName="CITY_NAME_UNIQUE" tableName="CITY" columnNames="NAME"/>
+        <addNotNullConstraint constraintName="CITY_DESCRIPTION_NOT_NULL" tableName="CITY" columnName="DESCRIPTION"/>
+        <sql stripComments="true">
+            ALTER TABLE CITY ADD CONSTRAINT CITY_NAME_CHECK CHECK (LENGTH(NAME) &gt; 1 AND LENGTH(NAME) &lt; 255);
+        </sql>
+    </changeSet>
+
+    <changeSet author="pavel.zdanovich" id="create CITY_SEQUENCE" runAlways="true" runOnChange="true"
+               failOnError="true">
+        <createSequence sequenceName="CITY_SEQUENCE" cacheSize="0" startValue="1"/>
+    </changeSet>
+
+    <changeSet author="pavel.zdanovich" id="insert data into CITY" runAlways="true" runOnChange="true"
+               failOnError="true">
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="Paris"/>
+            <column name="DESCRIPTION" value="Let's visit the Louvre, the Eiffel Tower may not be visited."/>
+        </insert>
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="London"/>
+            <column name="DESCRIPTION" value="Take a look at Big Ben and don't forget to visit Buckingham Palace."/>
+        </insert>
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="Rome"/>
+            <column name="DESCRIPTION" value="Do not go to the Coliseum, but be sure to visit the Vatican."/>
+        </insert>
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="Berlin"/>
+            <column name="DESCRIPTION" value="You just have to see the Reichstag, but you can walk past the Arc de Triomphe."/>
+        </insert>
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="Moscow"/>
+            <column name="DESCRIPTION" value="Do not forget to visit Red Square. You don’t have to go to the Central Department Store."/>
+        </insert>
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="Stockholm"/>
+            <column name="DESCRIPTION" value="Better to see the Vasa Museum, an hour to visit the Old Town."/>
+        </insert>
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="Barcelona"/>
+            <column name="DESCRIPTION" value="Take a walk around the Sagrada Familia, let's see Camp Nou next time."/>
+        </insert>
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="Copenhagen"/>
+            <column name="DESCRIPTION" value="Come to the park Thiva, and go around the Nyhavn."/>
+        </insert>
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="Amsterdam"/>
+            <column name="DESCRIPTION" value="Visit the Van Gogh Museum. Don't go to The Anne Frank house."/>
+        </insert>
+        <insert tableName="CITY">
+            <column name="ID" valueSequenceNext="CITY_SEQUENCE"/>
+            <column name="NAME" value="Minsk"/>
+            <column name="DESCRIPTION" value="Go to Victory Park.There is better not to visit the Old Town."/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
