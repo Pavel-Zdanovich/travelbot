@@ -13,7 +13,7 @@ import java.util.Optional;
 @Transactional
 public class CityService {
 
-    private CityRepository cityRepository;
+    private final CityRepository cityRepository;
 
     @Autowired
     public CityService(CityRepository cityRepository) {
